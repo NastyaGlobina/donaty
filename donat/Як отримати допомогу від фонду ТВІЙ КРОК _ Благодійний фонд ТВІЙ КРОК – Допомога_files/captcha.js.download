@@ -1,0 +1,28 @@
+function updateCaptcha(el) {
+
+    if (el.tagName == 'FORM') {
+        r = el.querySelectorAll('.refresh-captcha');
+        r.forEach((item) => {
+
+            updateCaptcha(item);
+        })
+        return;
+    }
+    config = el.getAttribute('data-refresh-config');
+    imgid = el.getAttribute('id') + 'img';
+    keyid = el.getAttribute('id') + 'key';
+
+    var ajax = new XMLHttpRequest();
+    ajax.open("GET", "/get_captcha/" + config, true);
+    ajax.send();
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            var data = ajax.responseText;
+            var json_data = JSON.parse(data);            
+            document.getElementById(imgid).src = json_data.img;
+            document.getElementById(keyid).value = json_data.key;
+            
+        }
+    }
+
+}

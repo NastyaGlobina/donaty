@@ -1,0 +1,111 @@
+/*!
+Theme Name: Eplatforma
+Theme URI: http://underscores.me/
+Author: AffdogsAgency
+Author URI: https://affdogs.agency/
+Description: Eplatforma
+Version: 1.0.0
+Text Domain: eplatforma
+*/
+
+.user-org-name {
+    display: none;
+}
+
+.field-hide {
+    display: none;
+}
+
+.form-wrapper {
+    margin: 0 auto;
+    max-width: 630px;
+
+}
+
+.form-check-input:checked[type=radio] {
+    --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
+}
+
+.form-check-input.is-valid,
+.was-validated .form-check-input:valid {
+    border-color: var(--bs-border-color);
+}
+
+.form-check-input.is-valid:checked,
+.was-validated .form-check-input:valid:checked {
+    background-color: #0d6efd;
+}
+
+.form-check-input.is-valid~.form-check-label,
+.was-validated .form-check-input:valid~.form-check-label {
+    color: var(--color-text-grey);
+}
+
+.form-control.is-invalid,
+.was-validated .form-control:invalid {
+    border-color: #CACACA;
+    background: #fff;
+}
+
+.err-msg {
+    margin-top: 7px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    color: #DD0000;
+}
+
+.submit-btn {
+    width: 100%;
+    line-height: 1;
+}
+
+.page-numbers.current {
+    z-index: 3;
+    color: var(--bs-pagination-active-color);
+    background-color: var(--bs-pagination-active-bg);
+    border-color: var(--bs-pagination-active-border-color);
+}
+
+.page-numbers {
+    position: relative;
+    display: block;
+    padding: var(--bs-pagination-padding-y) var(--bs-pagination-padding-x);
+    font-size: var(--bs-pagination-font-size);
+    color: var(--bs-pagination-color);
+    text-decoration: none;
+    background-color: var(--bs-pagination-bg);
+    border: var(--bs-pagination-border-width) solid var(--bs-pagination-border-color);
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+/* 
+.filter-pagi .page-numbers:first-of-type {
+    border-top-left-radius: var(--bs-pagination-border-radius);
+    border-bottom-left-radius: var(--bs-pagination-border-radius);
+}
+
+.filter-pagi .page-numbers:last-of-type {
+    border-top-right-radius: var(--bs-pagination-border-radius);
+    border-bottom-right-radius: var(--bs-pagination-border-radius);
+} */
+
+.page-item:first-child .page-link {
+    border-radius: 0;
+}
+
+.page-item:last-child .page-link {
+    border-radius: 0;
+}
+
+.prev.page-numbers,
+.next.page-numbers {
+    display: none;
+}
+
+.filter-pagi:not(:has(span))>.page-numbers:first-child {
+    z-index: 3;
+    color: var(--bs-pagination-active-color);
+    background-color: var(--bs-pagination-active-bg);
+    border-color: var(--bs-pagination-active-border-color);
+}

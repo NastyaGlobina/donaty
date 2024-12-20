@@ -1,0 +1,414 @@
+(function ($) {
+  "use strict";
+
+  $(document).ready(function () {
+    // Header Fixed
+    // $(window).scroll(function() {
+    //     if ($(this).scrollTop() > 50) {
+    //         $('.header').addClass('header-scroll');
+    //     } else {
+    //         $('.header').removeClass('header-scroll');
+    //     }
+    // });
+
+    AOS.init();
+
+    $(".toggle").click(function () {
+      $(".header-lang").toggleClass("open");
+    });
+
+    // Header Menu
+    const $body = $("body");
+    const $burgerMenu = $(".burger-menu");
+    const $navbarCollapse = $(".navbar-collapse");
+
+    function toggleBurger() {
+      $burgerMenu.toggleClass("opened");
+      $body.toggleClass("no-scroll");
+    }
+
+    $burgerMenu.on("click", function (e) {
+      e.stopPropagation();
+      toggleBurger();
+    });
+
+    $(".nav-link").on("click", function (e) {
+      $burgerMenu.removeClass("opened");
+      $burgerMenu.attr("aria-expanded", false);
+      $body.removeClass("no-scroll");
+      $navbarCollapse.removeClass("show");
+    });
+
+    $(".header-cta").on("click", function (e) {
+      e.preventDefault();
+      $(".help-wrap").toggle();
+    });
+
+    $(".help-modal-close").on("click", function (e) {
+      e.preventDefault();
+      $(".help-wrap").hide();
+    });
+
+    $(window).on("resize", function () {
+      if (window.innerWidth > 992) {
+        $burgerMenu.removeClass("opened");
+        $burgerMenu.attr("aria-expanded", false);
+        $body.removeClass("no-scroll");
+      }
+    });
+
+    const projectsWrapper = $(".projects-list .row .projects-items");
+    // Ajax filter project functions
+    $("#filter-form").change(function (e) {
+      e.preventDefault();
+      const values = $(this).serialize();
+
+      ajaxProjectFilter(values);
+    });
+
+    $("body").on("click", ".filter-pagi a.page-numbers", function (e) {
+      e.preventDefault();
+      let url = new URL($(this).attr("href"));
+      let page = url.searchParams.get("page") ?? 1;
+
+      const values = $("#filter-form").serialize() + "&page=" + page;
+
+      ajaxProjectFilter(values);
+    });
+
+    $("body").on("click", ".def-pagi a", function (e) {
+      e.preventDefault();
+      let page = $(this).attr("href").split("paged=").pop();
+
+      $(".def-pagi > div").removeClass("active");
+      $(this).parent("div").addClass("active");
+
+      $.ajax({
+        url: ep.ajaxurl,
+        type: "POST",
+        data: {
+          action: "my_custom_pagination",
+          page,
+        },
+        beforeSend: function () {},
+        success: function (response) {
+          projectsWrapper.html(response);
+          // updateProjectCountInfo();
+          // console.log(response);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {},
+      });
+    });
+
+    // $('.reset').on('click', function() {
+    //     ajaxProjectFilter($(this).attr('name'));
+    // })
+
+    function ajaxProjectFilter(values) {
+      $.ajax({
+        url: ep.ajaxurl,
+        method: "post",
+        data: {
+          formData: values,
+          action: "filter_projects",
+        },
+        beforeSend: function () {
+          projectsWrapper.css("opacity", "0.5");
+        },
+        success: function (response) {
+          projectsWrapper.css("opacity", "1");
+          let res = JSON.parse(response);
+          projectsWrapper.html(res.html);
+          $(".pagi").html(res.pagination);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          console.log("ERROR STATUS: " + xhr.status);
+          console.log("Error: " + thrownError);
+        },
+      });
+    }
+
+    $('input[name="user-occupation"]').on("change", function (e) {
+      const selectedValue = $(this).val();
+
+      $("[data-occupation]").hide().removeAttr("data-require");
+      $('[data-occupation="' + selectedValue + '"]')
+        .show()
+        .attr("data-require", "not-empty");
+    });
+
+    $('input[name="user-repres"]').on("change", function (e) {
+      if ($(this).val() === "organization") {
+        $(".user-org-name").show().attr("data-require", "not-empty");
+      } else {
+        $(".user-org-name").hide().removeAttr("data-require");
+      }
+    });
+
+    $("#get-help").on("submit", function (e) {
+      e.preventDefault();
+      const formData = $(this).serialize();
+
+      $.ajax({
+        url: ep.ajaxurl,
+        method: "post",
+        data: {
+          formData,
+          action: "get_help",
+        },
+        beforeSend: function () {
+          // $('#get-help').css("opacity", "0.5");
+        },
+        success: function (response) {
+          // $('#get-help').css("opacity", "1");
+          $("#get-help").find(".submit-msg").fadeIn().delay(2000).fadeOut();
+          $("#get-help")[0].reset();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          console.log("ERROR STATUS: " + xhr.status);
+          console.log("Error: " + thrownError);
+        },
+      });
+    });
+
+    $("#provide-help").on("submit", function (e) {
+      e.preventDefault();
+      const formData = $(this).serialize();
+
+      $.ajax({
+        url: ep.ajaxurl,
+        method: "post",
+        data: {
+          formData,
+          action: "provide_help",
+        },
+        beforeSend: function () {
+          // $('#provide-help').css("opacity", "0.5");
+        },
+        success: function (response) {
+          // $('#provide-help').css("opacity", "1");
+          $("#provide-help").find(".submit-msg").fadeIn().delay(2000).fadeOut();
+          $("#provide-help")[0].reset();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          console.log("ERROR STATUS: " + xhr.status);
+          console.log("Error: " + thrownError);
+        },
+      });
+    });
+
+    $("#check-status").on("submit", function (e) {
+      e.preventDefault();
+      const formData = $(this).serialize();
+
+      $.ajax({
+        url: ep.ajaxurl,
+        method: "post",
+        data: {
+          formData,
+          action: "check_status",
+        },
+        beforeSend: function () {
+          $("#check-status").css("opacity", "0.5");
+        },
+        success: function (response) {
+          $("#check-status").css("opacity", "1");
+          $("#check-status")[0].reset();
+          $(".status-check-wrap").html(response);
+          // console.log(response);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          console.log("ERROR STATUS: " + xhr.status);
+          console.log("Error: " + thrownError);
+        },
+      });
+    });
+
+    $("#modal-help").on("submit", function (e) {
+      e.preventDefault();
+      const formData = $(this).serialize();
+
+      $.ajax({
+        url: ep.ajaxurl,
+        method: "post",
+        data: {
+          formData,
+          action: "modal_form",
+        },
+        beforeSend: function () {},
+        success: function (response) {
+          $("#modal-help").find(".submit-msg").fadeIn().delay(2000).fadeOut();
+          $("#modal-help")[0].reset();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          console.log("ERROR STATUS: " + xhr.status);
+          console.log("Error: " + thrownError);
+        },
+      });
+    });
+
+    $("#commentform").submit(function (e) {
+      e.preventDefault();
+      const $form = $(this);
+
+      $.ajax({
+        type: $form.attr("method"),
+        url: $form.attr("action"),
+        data: $form.serialize(),
+        success: function () {
+          $form[0].reset();
+          $(".comments-area .submit-msg").fadeIn().delay(2000).fadeOut();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          console.log("ERROR STATUS: " + xhr.status);
+          console.log("Error: " + thrownError);
+        },
+      });
+    });
+
+    $(".all-apps").click(function (e) {
+      e.preventDefault();
+
+      $.ajax({
+        url: ep.ajaxurl,
+        method: "post",
+        data: {
+          action: "get_all_apps",
+        },
+        beforeSend: function () {},
+        success: function (response) {
+          $(".status-table tbody").html(response);
+          $(".all-apps").hide();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          console.log("ERROR STATUS: " + xhr.status);
+          console.log("Error: " + thrownError);
+        },
+      });
+    });
+
+    function updateProjectCountInfo() {
+      $.ajax({
+        url: ep.ajaxurl,
+        type: "POST",
+        data: { action: "update_project_count_info" },
+        success: function (response) {
+          // console.log(response);
+          $(".project-count-info").html(response);
+        },
+      });
+    }
+    $('input[type="tel"]').inputmask("(999) 999-99-99");
+
+    function validateForm() {
+      let isValidForm = true;
+      $("fieldset[data-require], div[data-require]").each(function () {
+        if (!validateField($(this))) {
+          isValidForm = false;
+        }
+      });
+
+      return isValidForm;
+    }
+
+    function validateField($field) {
+      let isValid = true;
+      let requireType = $field.data("require");
+      let $input = $field.find("input, select, textarea");
+
+      switch (requireType) {
+        case "not-empty":
+          if ($input.val().trim() !== "") {
+            $field.find(".err-msg").hide();
+          } else {
+            $field.find(".err-msg").show();
+            isValid = false;
+          }
+          break;
+        case "phone":
+          let phoneValue = $input.val().replace(/\D/g, "");
+          if (phoneValue.length !== 10) {
+            $field.find(".err-msg").show();
+            isValid = false;
+          } else {
+            $field.find(".err-msg").hide();
+          }
+          break;
+        case "url":
+          let urlValue = $input.val();
+          let urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+          if (!urlRegex.test(urlValue)) {
+            $field.find(".err-msg").show();
+            isValid = false;
+          } else {
+            $field.find(".err-msg").hide();
+          }
+          break;
+        case "select":
+          if ($input.val() === "") {
+            $field.find(".err-msg").show();
+            isValid = false;
+          } else {
+            $field.find(".err-msg").hide();
+          }
+          break;
+        case "check":
+          let $checkboxes = $field.find('input[type="checkbox"]:checked');
+          if ($checkboxes.length === 0) {
+            $field.find(".err-msg").show();
+            isValid = false;
+          } else {
+            $field.find(".err-msg").hide();
+          }
+          break;
+      }
+      return isValid;
+    }
+
+    $("input, select, textarea").on("input ", function () {
+      let $form = $(this).closest("form");
+
+      if ($form.hasClass("comment-form")) {
+        $form.find("input, textarea").on("input", function () {
+          var allFilled = true;
+          $form.find("input, textarea").each(function () {
+            if ($(this).val() === "") {
+              allFilled = false;
+              return false;
+            }
+          });
+
+          if (allFilled) {
+            $form.find('button[type="submit"]').prop("disabled", false);
+          } else {
+            $form.find('button[type="submit"]').prop("disabled", true);
+          }
+        });
+      }
+
+      if (validateForm()) {
+        $form.find('button[type="submit"]').removeAttr("disabled");
+      } else {
+        $form.find('button[type="submit"]').attr("disabled", "disabled");
+      }
+    });
+
+    $('input[type="checkbox"]').on("change", function () {
+      let $form = $(this).closest("form");
+      if (validateForm()) {
+        $form.find('button[type="submit"]').removeAttr("disabled");
+      } else {
+        $form.find('button[type="submit"]').attr("disabled", "disabled");
+      }
+    });
+
+    $('input[type="radio"]').on("change", function () {
+      let $form = $(this).closest("form");
+      if (validateForm()) {
+        $form.find('button[type="submit"]').removeAttr("disabled");
+      } else {
+        $form.find('button[type="submit"]').attr("disabled", "disabled");
+      }
+    });
+  });
+})(jQuery);

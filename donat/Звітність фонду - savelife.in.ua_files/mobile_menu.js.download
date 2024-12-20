@@ -1,0 +1,66 @@
+jQuery(
+  function () {
+    const btnHamburger = document.querySelector("#btn-hamburger");
+    const pageHeader = document.querySelector("#navbarCollapse__mobile");
+    const menuWrapper = pageHeader?.querySelector(".menu-wrapper");
+    const level1Links = pageHeader?.querySelectorAll(".level-1 > li > a");
+    const listWrapper2 = pageHeader?.querySelector(".list-wrapper:nth-child(1)");
+    const backOneLevelBtn = pageHeader?.querySelector(".back-level");
+    const isVisibleClass = "is-visible";
+    const isActiveClass = "is-active";
+    const sm = 576;
+
+    btnHamburger?.addEventListener("click", function () {
+      if (!pageHeader?.classList.contains("show")) {
+        pageHeader?.classList.toggle("show");
+      } else {
+        pageHeader?.classList.remove("show");
+        menu_back();
+      }
+
+      menuWrapper?.classList.toggle(isVisibleClass);
+      if (!this.classList.contains(isVisibleClass)) {
+        listWrapper2?.classList.remove(isVisibleClass);
+        const menuLinks = menuWrapper?.querySelectorAll("a");
+        for (const menuLink of menuLinks) {
+          menuLink.classList.remove(isActiveClass);
+        }
+      }
+    });
+
+    if (level1Links) {
+      for (const level1Link of level1Links) {
+        level1Link?.addEventListener("click", function (e) {
+          e.preventDefault();
+          jQuery(".menu-back").removeClass("hidden");
+          const parent = this.parentElement;
+          jQuery(parent).children(".level-2").addClass(isVisibleClass);
+          parent.classList.add(isActiveClass);
+          jQuery(this).parent().siblings().not("." + isActiveClass).addClass("hidden");
+          jQuery(".language-switch-container__mobile").hide();
+          jQuery(this).children('svg').hide();
+          jQuery(".mobile_contacts").hide();
+        });
+      }
+    }
+
+    backOneLevelBtn?.addEventListener("click", function () {
+      menu_back();
+    });
+
+    function menu_back () {
+      const lists = document.querySelectorAll(".list-wrapper ul > li");
+      const visibleElem = document.querySelector(".level-2." + isVisibleClass);
+      jQuery(".is-active > a > svg").show();
+      jQuery(lists).removeClass("hidden " + isActiveClass );
+      jQuery(visibleElem).removeClass(isVisibleClass);
+      jQuery(".menu-back").addClass("hidden");
+
+      if (screen.width < sm) {
+        jQuery(".language-switch-container__mobile").show();
+      }
+
+      jQuery(".mobile_contacts").show();
+    };
+  }
+)

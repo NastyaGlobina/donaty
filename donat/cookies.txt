@@ -1,0 +1,5 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+.ukraine.ua	TRUE	/	FALSE	1999999999	__cf_bm	niwPM7N5NPZe.uTnMVrdKLkQGqbR.7mro46HW5a6PWA-1731520057-1.0.1.1-Oeq_KwrQwOvMM5bPHMC8eilXZleFX6Ns6gHZNgn7LzvESbetHrj52lqz0JVxcdKcS579IPNhcsiYb1DoC50rFA
+war.ukraine.ua	TRUE	/	FALSE	1999999999	SameSite	None
+

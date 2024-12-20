@@ -1,0 +1,21 @@
+.tobii-image {
+    margin-bottom: 3rem;
+    border-radius: 0.25rem;
+}
+
+.tobii__btn--close {
+    width: 2.1rem !important;
+    height: 2.1rem !important;
+    right: 1rem !important;
+    top: 0.5rem !important;
+}
+
+.tobii__counter {
+    font-size: 16px !important;
+    left: 1rem !important;
+}
+
+.tobii-zoom__icon {
+    background: #333138 !important;
+    border-radius: 0.25rem;
+}

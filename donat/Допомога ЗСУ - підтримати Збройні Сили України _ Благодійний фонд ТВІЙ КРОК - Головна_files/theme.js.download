@@ -1,0 +1,417 @@
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./sources/js/theme.js":
+/*!*****************************!*\
+  !*** ./sources/js/theme.js ***!
+  \*****************************/
+/***/ (() => {
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function on(elSelector, eventName, selector, fn) {
+  var element = document.querySelector(elSelector);
+  element.addEventListener(eventName, function (event) {
+    var possibleTargets = element.querySelectorAll(selector);
+    var target = event.target;
+
+    for (var i = 0, l = possibleTargets.length; i < l; i++) {
+      var el = target;
+      var p = possibleTargets[i];
+
+      while (el && el !== element) {
+        if (el === p) {
+          return fn.call(p, event);
+        }
+
+        el = el.parentNode;
+      }
+    }
+  });
+}
+
+var tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+
+var tooltipList = _toConsumableArray(tooltipTriggerList).map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl);
+});
+
+on('body', 'click', '#amountGroup', function (e) {
+  // document.getElementById('amountGroup').onclick = function() {
+  var radios = document.getElementsByName('amount');
+
+  var _iterator = _createForOfIteratorHelper(radios),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var radio = _step.value;
+
+      if (radio.checked && radio.value == 'other') {
+        document.getElementById('amountOtherInput').classList.toggle('d-none');
+        document.getElementById('otherAmountInput').focus();
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+});
+on('body', 'click', '.bank-copy', function (e) {
+  var parent = this.parentNode;
+  var bankNumber = parent.getElementsByClassName('bank-number');
+  var el = document.createElement('textarea');
+  el.value = bankNumber[0].innerText;
+  el.setAttribute('readonly', '');
+  el.style.position = 'absolute';
+  el.style.left = '-9999px';
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+});
+on('body', 'click', '.creditcard-button', function (e) {
+  var copyText = this.getElementsByClassName('copy-text');
+  var el = document.createElement('textarea');
+  el.value = copyText[0].innerText;
+  el.setAttribute('readonly', '');
+  el.style.position = 'absolute';
+  el.style.left = '-9999px';
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+  var tooltipCopy = this.getElementsByClassName('copy-tooltip');
+  tooltipCopy[0].classList.remove('d-none');
+  tooltipCopy[0].classList.add('d-block');
+  setTimeout(closeTooltip, 2000, tooltipCopy[0]);
+});
+
+function closeTooltip(tooltip) {
+  tooltip.classList.remove('d-block');
+  tooltip.classList.add('d-none');
+}
+
+function setImgAttrs(selector) {
+  var imageSlider = document.querySelectorAll(selector);
+  imageSlider.forEach(function (element) {
+    element.width = element.naturalWidth;
+    element.height = element.naturalHeight;
+  });
+}
+
+window.addEventListener('load', function () {
+  setImgAttrs(".project-slider-image");
+  setImgAttrs(".project-slider-picture");
+  setImgAttrs(".project-slider-outer");
+  setImgAttrs(".project-main-image");
+  setImgAttrs(".project-preview-image");
+  setImgAttrs(".post-main-image");
+  setImgAttrs(".post-info-preview-image");
+}, false);
+window.addEventListener('resize', function () {
+  setImgAttrs(".project-slider-image");
+  setImgAttrs(".project-slider-picture");
+  setImgAttrs(".project-slider-outer");
+  setImgAttrs(".project-main-image");
+  setImgAttrs(".project-preview-image");
+  setImgAttrs(".post-main-image");
+  setImgAttrs(".post-info-preview-image");
+}, false);
+var splide = new Splide('.splide', {
+  type: 'loop',
+  autoplay: true,
+  lazyLoad: 'sequential',
+  perPage: 6,
+  perMove: 1,
+  pagination: false,
+  gap: '1rem',
+  breakpoints: {
+    1200: {
+      perPage: 5,
+      gap: '1rem'
+    },
+    991: {
+      perPage: 4,
+      gap: '1rem'
+    },
+    767: {
+      perPage: 3,
+      gap: '1rem'
+    },
+    575: {
+      perPage: 2,
+      gap: '.7rem'
+    },
+    320: {
+      perPage: 1,
+      gap: '.7rem'
+    }
+  }
+});
+splide.mount();
+on('body', 'click', '.payment-method', function (e) {
+  var paymentType = document.getElementById('paymentTypeSubscribe');
+  var curEur = document.getElementById('currencyEUR');
+  var curUsd = document.getElementById('currencyUSD');
+
+  if (this.value == 'monobank') {
+    paymentType.setAttribute('disabled', true);
+    curEur.setAttribute('disabled', true);
+    curUsd.setAttribute('disabled', true);
+  } else {
+    paymentType.removeAttribute('disabled');
+    curEur.removeAttribute('disabled');
+    curUsd.removeAttribute('disabled');
+  }
+});
+on('body', 'click', '#searchToggler', function (e) {
+  var searchForm = document.getElementById('searchForm');
+  var searchField = document.getElementById('searchField');
+  var searchOverlay = document.getElementById('searchOverlay');
+  var body = document.querySelector('body');
+  searchForm.classList.toggle('d-none');
+  searchOverlay.classList.toggle('d-none');
+  searchField.focus();
+  body.classList.toggle('overflow-hidden');
+});
+on('body', 'click', '#searchClose, #searchOverlay', function (e) {
+  var searchForm = document.getElementById('searchForm');
+  var searchField = document.getElementById('searchField');
+  var searchOverlay = document.getElementById('searchOverlay');
+  var body = document.querySelector('body');
+  searchForm.classList.toggle('d-none');
+  searchOverlay.classList.toggle('d-none');
+  body.classList.toggle('overflow-hidden');
+});
+var searchField = document.getElementById('searchField');
+
+searchField.oninput = searchField.onpaste = function (e) {
+  if (e.target.value.length > 1) {
+    oc.ajax('onSearch', {
+      data: {
+        search: e.target.value
+      },
+      update: {
+        'common/header/search-results': '#searchResults'
+      }
+    });
+  }
+};
+
+/***/ }),
+
+/***/ "./sources/scss/theme.scss":
+/*!*********************************!*\
+  !*** ./sources/scss/theme.scss ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./sources/scss/bootstrap.scss":
+/*!*************************************!*\
+  !*** ./sources/scss/bootstrap.scss ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./sources/fonts/icomoon/font-icomoon.css":
+/*!************************************************!*\
+  !*** ./sources/fonts/icomoon/font-icomoon.css ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./sources/fonts/avenir/font-avenir.css":
+/*!**********************************************!*\
+  !*** ./sources/fonts/avenir/font-avenir.css ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/chunk loaded */
+/******/ 	(() => {
+/******/ 		var deferred = [];
+/******/ 		__webpack_require__.O = (result, chunkIds, fn, priority) => {
+/******/ 			if(chunkIds) {
+/******/ 				priority = priority || 0;
+/******/ 				for(var i = deferred.length; i > 0 && deferred[i - 1][2] > priority; i--) deferred[i] = deferred[i - 1];
+/******/ 				deferred[i] = [chunkIds, fn, priority];
+/******/ 				return;
+/******/ 			}
+/******/ 			var notFulfilled = Infinity;
+/******/ 			for (var i = 0; i < deferred.length; i++) {
+/******/ 				var [chunkIds, fn, priority] = deferred[i];
+/******/ 				var fulfilled = true;
+/******/ 				for (var j = 0; j < chunkIds.length; j++) {
+/******/ 					if ((priority & 1 === 0 || notFulfilled >= priority) && Object.keys(__webpack_require__.O).every((key) => (__webpack_require__.O[key](chunkIds[j])))) {
+/******/ 						chunkIds.splice(j--, 1);
+/******/ 					} else {
+/******/ 						fulfilled = false;
+/******/ 						if(priority < notFulfilled) notFulfilled = priority;
+/******/ 					}
+/******/ 				}
+/******/ 				if(fulfilled) {
+/******/ 					deferred.splice(i--, 1)
+/******/ 					var r = fn();
+/******/ 					if (r !== undefined) result = r;
+/******/ 				}
+/******/ 			}
+/******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/jsonp chunk loading */
+/******/ 	(() => {
+/******/ 		// no baseURI
+/******/ 		
+/******/ 		// object to store loaded and loading chunks
+/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
+/******/ 		var installedChunks = {
+/******/ 			"/assets/js/theme": 0,
+/******/ 			"assets/css/font-avenir": 0,
+/******/ 			"assets/css/font-icomoon": 0,
+/******/ 			"assets/css/bootstrap": 0,
+/******/ 			"assets/css/theme": 0
+/******/ 		};
+/******/ 		
+/******/ 		// no chunk on demand loading
+/******/ 		
+/******/ 		// no prefetching
+/******/ 		
+/******/ 		// no preloaded
+/******/ 		
+/******/ 		// no HMR
+/******/ 		
+/******/ 		// no HMR manifest
+/******/ 		
+/******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
+/******/ 		
+/******/ 		// install a JSONP callback for chunk loading
+/******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
+/******/ 			var [chunkIds, moreModules, runtime] = data;
+/******/ 			// add "moreModules" to the modules object,
+/******/ 			// then flag all "chunkIds" as loaded and fire callback
+/******/ 			var moduleId, chunkId, i = 0;
+/******/ 			if(chunkIds.some((id) => (installedChunks[id] !== 0))) {
+/******/ 				for(moduleId in moreModules) {
+/******/ 					if(__webpack_require__.o(moreModules, moduleId)) {
+/******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
+/******/ 					}
+/******/ 				}
+/******/ 				if(runtime) var result = runtime(__webpack_require__);
+/******/ 			}
+/******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
+/******/ 			for(;i < chunkIds.length; i++) {
+/******/ 				chunkId = chunkIds[i];
+/******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 					installedChunks[chunkId][0]();
+/******/ 				}
+/******/ 				installedChunks[chunkId] = 0;
+/******/ 			}
+/******/ 			return __webpack_require__.O(result);
+/******/ 		}
+/******/ 		
+/******/ 		var chunkLoadingGlobal = self["webpackChunk"] = self["webpackChunk"] || [];
+/******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
+/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
+/******/ 	__webpack_require__.O(undefined, ["assets/css/font-avenir","assets/css/font-icomoon","assets/css/bootstrap","assets/css/theme"], () => (__webpack_require__("./sources/js/theme.js")))
+/******/ 	__webpack_require__.O(undefined, ["assets/css/font-avenir","assets/css/font-icomoon","assets/css/bootstrap","assets/css/theme"], () => (__webpack_require__("./sources/scss/theme.scss")))
+/******/ 	__webpack_require__.O(undefined, ["assets/css/font-avenir","assets/css/font-icomoon","assets/css/bootstrap","assets/css/theme"], () => (__webpack_require__("./sources/scss/bootstrap.scss")))
+/******/ 	__webpack_require__.O(undefined, ["assets/css/font-avenir","assets/css/font-icomoon","assets/css/bootstrap","assets/css/theme"], () => (__webpack_require__("./sources/fonts/icomoon/font-icomoon.css")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["assets/css/font-avenir","assets/css/font-icomoon","assets/css/bootstrap","assets/css/theme"], () => (__webpack_require__("./sources/fonts/avenir/font-avenir.css")))
+/******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
+/******/ 	
+/******/ })()
+;

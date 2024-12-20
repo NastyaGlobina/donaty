@@ -1,0 +1,3 @@
+date	size'/'remotesize	flags(request:Update,Range state:File response:Modified,Chunked,gZipped)	statuscode	status ('servermsg')	MIME	Etag|Date	URL	localfile	(from URL)
+19:47:37	5364/5364	---MCZ	403	error ('Forbidden')	text/html	date:Wed,%2013%20Nov%202024%2017:47:37%20GMT	https://war.ukraine.ua/robots.txt		(from )
+19:47:37	7972/7972	---MCZ	403	error ('Forbidden')	text/html	date:Wed,%2013%20Nov%202024%2017:47:37%20GMT	https://war.ukraine.ua/donate/	D:/OSPanel/domains/Donaty/donat/war.ukraine.ua/donate/index.html	(from )
